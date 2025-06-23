@@ -41,18 +41,8 @@ body {
   font-style: italic; /* Делает текст курсивом */
   min-height: 2.3em;
 }
-.quote-text::before,
-.quote-text::after {
-  content: '"'; /* Начальные двойные кавычки */
-}
 .quote-author {
   font-weight: bold;
-}
-.quote-author::before {
-  content: '('; /* Начальные двойные кавычки */
-}
-.quote-author::after {
-  content: ')';
 }
 .favorites-container {
   display: flex;
