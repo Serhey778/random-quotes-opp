@@ -1,8 +1,10 @@
+import Quote from './Quote.js';
 import RandomQuote from './RandomQuote.js';
 
 class RamdomQuatesApp {
   constructor() {
     this.randomQuoteBtn = document.getElementById('random-quote-btn');
+    this.randomQuoteAPIBtn = document.getElementById('random-quote-api-btn');
     this.textElement = document.getElementById('quote-text');
     this.authorElement = document.getElementById('quote-author');
     this.currentQuote = null;
@@ -12,13 +14,25 @@ class RamdomQuatesApp {
     this.textElement.textContent = this.currentQuote.formatText();
     this.authorElement.textContent = this.currentQuote.formatAuthor();
   }
+  changeCurrentQuote(newQuote) {
+    if (newQuote instanceof Quote) {
+      this.currentQuote = newQuote;
+      this.displayCurrentQuote();
+    }
+  }
   getRandomQuote() {
-    const randomQuote = RandomQuote.getRandomQuote();
-    this.currentQuote = randomQuote;
-    this.displayCurrentQuote();
+    this.changeCurrentQuote(RandomQuote.getRandomQuote());
+  }
+  getRandomQuoteViaAPI() {
+    RandomQuote.getRandomQuoteViaAPI().then((quote) =>
+      this.changeCurrentQuote(quote)
+    );
   }
   init() {
     this.randomQuoteBtn.addEventListener('click', () => this.getRandomQuote());
+    this.randomQuoteAPIBtn.addEventListener('click', () =>
+      this.getRandomQuoteViaAPI()
+    );
   }
 }
 export default RamdomQuatesApp;
