@@ -8,13 +8,16 @@ class RandomQuote {
     const { id, text, author } = quotes[randomIndex];
     return new Quote(id, text, author);
   }
-  static getRandomQuoteViaAPI() {
+  static async getRandomQuoteViaAPI() {
     const url = 'https://quoteslate.vercel.app/api/quotes/random';
     const options = { headers: { 'Content-Type': 'application/json' } };
-    return fetch(url, options)
-      .then((response) => response.json())
-      .then(({ id, quote: text, author }) => new Quote(id, text, author))
-      .catch((error) => console.error('Error:', error));
+    try {
+      const responce = await fetch(url, options);
+      const { id, quote: text, author } = await responce.json();
+      return new Quote(id, text, author);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 }
 export default RandomQuote;
